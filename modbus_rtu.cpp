@@ -12,7 +12,7 @@
 
 ModbusRTU::ModbusRTU()
 {
-	slave_addr = 101;
+	slave_addr = 108;
 	starting_address = 0;
 	quantity = 0;
 	byte_count = 0;
