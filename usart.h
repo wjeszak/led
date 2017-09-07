@@ -12,15 +12,9 @@
 #include "state_machine.h"
 
 #if defined (__AVR_ATmega88P__)
-	#define USART_DE_DDR 			DDRC
-	#define USART_DE_PORT 			PORTC
-	#define USART_DE_PIN	 		3
-#endif
-
-#if defined (__AVR_ATmega8__)
 	#define USART_DE_DDR 			DDRD
 	#define USART_DE_PORT 			PORTD
-	#define USART_DE_PIN	 		2
+	#define USART_DE_PIN	 		5
 #endif
 
 #define USART_DE_RECEIVE 		USART_DE_PORT &= ~(1 << USART_DE_PIN)

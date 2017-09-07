@@ -8,10 +8,11 @@
 #include "comm_prot.h"
 #include "usart.h"
 #include "timer.h"
+#include "led.h"
 
 Comm_prot::Comm_prot()
 {
-	slave_addr = 6;
+	slave_addr = 3;
 }
 
 void Comm_prot::Parse(uint8_t* frame)
@@ -19,13 +20,23 @@ void Comm_prot::Parse(uint8_t* frame)
 	uint8_t crc = Crc8(frame, 2);
 	if((frame[0] == slave_addr) && (frame[2] == crc))
 	{
+		timer.Disable(TIMER_LED_BLINK);
+		LED_GREEN_OFF;
+		LED_RED_OFF;
+
 		switch(frame[1])
 		{
 		case 0x01:
+			LED_GREEN_ON;
 		break;
 		case 0x02:
+			LED_RED_ON;
 		break;
 		case 0x03:
+			timer.Assign(TIMER_LED_BLINK, 300, LedBlinkGreen);
+		break;
+		case 0x04:
+			timer.Assign(TIMER_LED_BLINK, 300, LedBlinkRed);
 		break;
 
 		}

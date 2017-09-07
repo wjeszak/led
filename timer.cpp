@@ -11,6 +11,7 @@
 #include "timer.h"
 #include "usart.h"
 #include "comm_prot.h"
+#include "led.h"
 
 Timer::Timer(T0Prescallers Prescaller, uint8_t Tick)
 {
@@ -69,4 +70,14 @@ void Timer::Disable(uint8_t handler_id)
 ISR(TIMER0_COMPA_vect)
 {
 	timer.Irq();
+}
+
+void LedBlinkGreen()
+{
+	LED_GREEN_SW;
+}
+
+void LedBlinkRed()
+{
+	LED_RED_SW;
 }

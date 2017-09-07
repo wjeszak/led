@@ -13,7 +13,7 @@
 
 #define NUMBER_OF_TIMERS 				8
 
-#define TIMER_TEST_ELECTROMAGNET		0
+#define TIMER_LED_BLINK					0
 
 // PCB door: F_CPU = 73728000 Hz
 // OCR = (F_CPU / 64 / 500) - 1 = 229		~2 ms
@@ -49,5 +49,8 @@ private:
 };
 
 extern Timer timer;
+
+extern void LedBlinkGreen();
+extern void LedBlinkRed();
 
 #endif /* TIMER_H_ */
