@@ -12,19 +12,24 @@
 
 Comm_prot::Comm_prot()
 {
-	slave_addr = 3;
+	slave_addr = 7;
 }
 
 void Comm_prot::Parse(uint8_t* frame)
 {
 	uint8_t crc = Crc8(frame, 2);
-	if((frame[0] == slave_addr) && (frame[2] == crc))
+	if((frame[0] == slave_addr + 100) && (frame[2] == crc))
+	{
+		queued_command = frame[1];
+	}
+
+	if((frame[0] == 0xFF) && (frame[2] == crc))
 	{
 		timer.Disable(TIMER_LED_BLINK);
 		LED_GREEN_OFF;
 		LED_RED_OFF;
 
-		switch(frame[1])
+		switch(queued_command)
 		{
 		case 0x01:
 			LED_GREEN_ON;
@@ -33,12 +38,15 @@ void Comm_prot::Parse(uint8_t* frame)
 			LED_RED_ON;
 		break;
 		case 0x03:
-			timer.Assign(TIMER_LED_BLINK, 300, LedBlinkGreen);
+			timer.Assign(TIMER_LED_BLINK, 200, LedBlinkGreen);
 		break;
 		case 0x04:
-			timer.Assign(TIMER_LED_BLINK, 300, LedBlinkRed);
+			timer.Assign(TIMER_LED_BLINK, 200, LedBlinkRed);
 		break;
-
+		//case 0x05:
+		//	timer.Assign(TIMER_LED_BLINK, 800,
+		default:
+		break;
 		}
 	}
 }
@@ -51,6 +59,11 @@ void Comm_prot::Prepare(uint8_t res)
 	usart_data.frame[3] = 0x0A;
 	usart_data.len = FRAME_LENGTH;
 	usart.SendFrame(&usart_data);
+}
+
+void Comm_prot::EnqueueCommand(uint8_t command)
+{
+	queued_command = command;
 }
 
 uint8_t Comm_prot::Crc8(uint8_t *frame, uint8_t len)

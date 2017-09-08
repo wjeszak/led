@@ -19,8 +19,10 @@ public:
 	void Parse(uint8_t* frame);
 	void Prepare(uint8_t res);
 private:
+	void EnqueueCommand(uint8_t command);
 	uint8_t Crc8(uint8_t *frame, uint8_t len);
 	uint8_t slave_addr;
+	uint8_t queued_command;
 };
 
 extern Comm_prot comm;
