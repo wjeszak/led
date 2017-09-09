@@ -72,12 +72,37 @@ ISR(TIMER0_COMPA_vect)
 	timer.Irq();
 }
 
-void LedBlinkGreen()
+void GreenBlink()
 {
 	LED_GREEN_SW;
 }
 
-void LedBlinkRed()
+void RedBlink()
 {
 	LED_RED_SW;
+}
+
+void GreenRedBlink()
+{
+	LED_GREEN_SW;
+	LED_RED_SW;
+}
+
+void PulseA()
+{
+	led.pulses_cnt++;
+	if(led.pulses_cnt == led.pulses * 2)
+	{
+		led.pulses_cnt = 0;
+		timer.Disable(TIMER_LED_PULSE);
+		timer.Assign(TIMER_LED_DELAY, LED_PULSE_DELAY_PERIOD, PulseB);
+	}
+	LED_PORT ^= (1 << led.color);
+}
+
+void PulseB()
+{
+	timer.Disable(TIMER_LED_DELAY);
+	LED_PORT &= ~(1 << led.color);
+	timer.Assign(TIMER_LED_PULSE, LED_PULSE_PERIOD, PulseA);
 }

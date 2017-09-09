@@ -1,5 +1,5 @@
 /*
- * modbus_rtu.cpp
+ * comm_prot.cpp
  *
  *  Created on: 27 cze 2017
  *      Author: tomek
@@ -12,40 +12,62 @@
 
 Comm_prot::Comm_prot()
 {
-	slave_addr = 7;
+	address = 1;
 }
 
 void Comm_prot::Parse(uint8_t* frame)
 {
 	uint8_t crc = Crc8(frame, 2);
-	if((frame[0] == slave_addr + 100) && (frame[2] == crc))
+	if((frame[0] == address + ADDRESS_OFFSET) && (frame[2] == crc))
 	{
 		queued_command = frame[1];
 	}
 
 	if((frame[0] == 0xFF) && (frame[2] == crc))
 	{
-		timer.Disable(TIMER_LED_BLINK);
 		LED_GREEN_OFF;
 		LED_RED_OFF;
+		timer.Disable(TIMER_LED_BLINK);
+		timer.Disable(TIMER_LED_PULSE);
+		timer.Disable(TIMER_LED_DELAY);
 
 		switch(queued_command)
 		{
-		case 0x01:
+		case COMM_GREEN_ON:
 			LED_GREEN_ON;
 		break;
-		case 0x02:
+		case COMM_RED_ON:
 			LED_RED_ON;
 		break;
-		case 0x03:
-			timer.Assign(TIMER_LED_BLINK, 200, LedBlinkGreen);
+		case COMM_GREEN_BLINK:
+			timer.Assign(TIMER_LED_BLINK, LED_BLINK_PERIOD, GreenBlink);
 		break;
-		case 0x04:
-			timer.Assign(TIMER_LED_BLINK, 200, LedBlinkRed);
+		case COMM_RED_BLINK:
+			timer.Assign(TIMER_LED_BLINK, LED_BLINK_PERIOD, RedBlink);
 		break;
-		//case 0x05:
-		//	timer.Assign(TIMER_LED_BLINK, 800,
+		case COMM_GREEN_RED_BLINK:
+			timer.Assign(TIMER_LED_BLINK, LED_BLINK_PERIOD, GreenRedBlink);
+		break;
+		case COMM_GREEN_1PULSE:
+			led.SetParams(LED_GREEN_PIN, 1);
+		break;
+		case COMM_RED_1PULSE:
+			led.SetParams(LED_RED_PIN, 1);
+		break;
+		case COMM_GREEN_2PULSES:
+			led.SetParams(LED_GREEN_PIN, 2);
+		break;
+		case COMM_RED_2PULSES:
+			led.SetParams(LED_RED_PIN, 2);
+		break;
+		case COMM_GREEN_3PULSES:
+			led.SetParams(LED_GREEN_PIN, 3);
+		break;
+		case COMM_RED_3PULSES:
+			led.SetParams(LED_RED_PIN, 3);
+		break;
 		default:
+		//	led.SetParams(LED_RED_PIN, 3);
 		break;
 		}
 	}
@@ -53,7 +75,7 @@ void Comm_prot::Parse(uint8_t* frame)
 
 void Comm_prot::Prepare(uint8_t res)
 {
-	usart_data.frame[0] = slave_addr;
+	usart_data.frame[0] = address;
 	usart_data.frame[1] = res;
 	usart_data.frame[2] = Crc8(usart_data.frame, 2);
 	usart_data.frame[3] = 0x0A;

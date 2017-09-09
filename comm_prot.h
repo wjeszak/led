@@ -1,5 +1,5 @@
 /*
- * modbus_rtu.h
+ * comm_prot.h
  *
  *  Created on: 27 cze 2017
  *      Author: tomek
@@ -10,7 +10,22 @@
 
 #include <inttypes.h>
 
-#define FRAME_LENGTH 		4
+#define FRAME_LENGTH 			4
+#define ADDRESS_OFFSET 			100
+
+#define COMM_GREEN_RED_OFF 		0x00
+
+#define COMM_GREEN_ON 			0x01
+#define COMM_RED_ON 			0x02
+#define COMM_GREEN_BLINK 		0x03
+#define COMM_RED_BLINK 			0x04
+#define COMM_GREEN_RED_BLINK 	0x05
+#define COMM_GREEN_1PULSE 		0x06
+#define COMM_RED_1PULSE 		0x07
+#define COMM_GREEN_2PULSES 		0x08
+#define COMM_RED_2PULSES 		0x09
+#define COMM_GREEN_3PULSES 		0x10
+#define COMM_RED_3PULSES 		0x11
 
 class Comm_prot
 {
@@ -20,8 +35,8 @@ public:
 	void Prepare(uint8_t res);
 private:
 	void EnqueueCommand(uint8_t command);
-	uint8_t Crc8(uint8_t *frame, uint8_t len);
-	uint8_t slave_addr;
+	uint8_t Crc8(uint8_t* frame, uint8_t len);
+	uint8_t address;
 	uint8_t queued_command;
 };
 
