@@ -21,19 +21,6 @@
 #define UART_BUF_SIZE 			16
 #define UART_BUF_MASK 			(UART_BUF_SIZE - 1)
 
-#define US_UBRRH 	UBRR0H
-#define US_UBRRL 	UBRR0L
-#define US_UCSRB	UCSR0B
-#define US_RXEN 	RXEN0
-#define US_TXEN 	TXEN0
-#define US_RXCIE	RXCIE0
-#define US_TXCIE	TXCIE0
-#define US_UDRIE 	UDRIE0
-#define US_UDR 		UDR0
-#define US_RX 		USART_RX_vect
-#define US_UDRE 	USART_UDRE_vect
-#define US_TX 		USART_TX_vect
-
 class UsartData : public EventData
 {
 public:

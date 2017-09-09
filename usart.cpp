@@ -13,10 +13,10 @@
 Usart::Usart(uint16_t baud) : StateMachine(ST_MAX_STATES)
 {
 	uint16_t ubrr = F_CPU / 16 / baud - 1;
-	US_UBRRH = (uint8_t)(ubrr >> 8);
-	US_UBRRL = (uint8_t)ubrr;
+	UBRR0H = (uint8_t)(ubrr >> 8);
+	UBRR0L = (uint8_t)ubrr;
 
-	US_UCSRB |= (1 << US_RXEN) | (1 << US_TXEN) | (1 << US_TXCIE);
+	UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << TXCIE0);
 	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);
 
 	USART_DE_INIT;
@@ -30,23 +30,23 @@ Usart::Usart(uint16_t baud) : StateMachine(ST_MAX_STATES)
 void Usart::RxEnable()
 {
 	USART_DE_RECEIVE;
-	US_UCSRB |= (1 << US_RXEN) | (1 << US_RXCIE);
+	UCSR0B |= (1 << RXEN0) | (1 << RXCIE0);
 }
 
 void Usart::RxDisable()
 {
-	US_UCSRB &= ~((1 << US_RXEN) | (1 << US_RXCIE));
+	UCSR0B &= ~((1 << RXEN0) | (1 << RXCIE0));
 }
 
 void Usart::TxEnable()
 {
 	USART_DE_SEND;
-	US_UCSRB |= (1 << US_UDRIE);
+	UCSR0B |= (1 << UDRIE0);
 }
 
 void Usart::TxDisable()
 {
-	US_UCSRB &= ~(1 << US_UDRIE);
+	UCSR0B &= ~(1 << UDRIE0);
 }
 
 void Usart::ST_Idle(UsartData* pdata)
@@ -79,8 +79,8 @@ void Usart::ST_FrameReceived(UsartData* pdata)
 		usart_data.frame[i] = rx_buf[rx_tail];
 		i++;
 	}
-	InternalEvent(ST_IDLE, pdata);
 	pdata->len = 0;
+	InternalEvent(ST_IDLE, pdata);
 	comm.Parse(pdata->frame);
 }
 
@@ -99,7 +99,7 @@ void Usart::EV_TXBufferEmpty(UsartData* pdata)
 	if(tx_head != tx_tail)
 	{
 		tx_tail = (tx_tail + 1) & UART_BUF_MASK;
-		US_UDR = tx_buf[tx_tail];
+		UDR0 = tx_buf[tx_tail];
 	}
 	else
 	{
@@ -128,9 +128,9 @@ void Usart::SendFrame(UsartData* pdata)
 	TxEnable();
 }
 
-ISR(US_RX)
+ISR(USART_RX_vect)
 {
-	usart_data.c = US_UDR;
+	usart_data.c = UDR0;
 	usart.EV_NewByte(&usart_data);
 }
 
@@ -139,7 +139,7 @@ ISR(USART_UDRE_vect)
 	usart.EV_TXBufferEmpty();
 }
 
-ISR(US_TX)
+ISR(USART_TX_vect)
 {
 	usart.EV_TXComplete();
 }
