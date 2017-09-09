@@ -20,6 +20,7 @@ uint8_t StateMachine::GetState()
 {
 	return current_state;
 }
+
 void StateMachine::Event(uint8_t new_state, EventData *pdata)
 {
 	if(new_state == ST_NOT_ALLOWED) {}

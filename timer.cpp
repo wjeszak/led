@@ -5,12 +5,8 @@
  *      Author: tomek
  */
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
-#include <stdio.h>			// NULL
 #include "timer.h"
-#include "usart.h"
-#include "comm_prot.h"
 #include "led.h"
 
 Timer::Timer(T0Prescallers Prescaller, uint8_t Tick)
@@ -71,7 +67,7 @@ ISR(TIMER0_COMPA_vect)
 {
 	timer.Irq();
 }
-
+// -----------------------------------------------------------------
 void GreenBlink()
 {
 	LED_GREEN_SW;

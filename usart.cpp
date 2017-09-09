@@ -7,11 +7,8 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <string.h>
-#include "usart.h"
 #include "state_machine.h"
+#include "usart.h"
 #include "comm_prot.h"
 
 Usart::Usart(uint16_t baud) : StateMachine(ST_MAX_STATES)
@@ -21,13 +18,8 @@ Usart::Usart(uint16_t baud) : StateMachine(ST_MAX_STATES)
 	US_UBRRL = (uint8_t)ubrr;
 
 	US_UCSRB |= (1 << US_RXEN) | (1 << US_TXEN) | (1 << US_TXCIE);
-#if defined (__AVR_ATmega88P__)
 	UCSR0C |= (1 << UCSZ01) | (1 << UCSZ00);
-#endif
 
-#if defined (__AVR_ATmega8__)
-	UCSRC |= (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
-#endif
 	USART_DE_INIT;
 	rx_head = 0;
 	rx_tail = 0;
@@ -69,7 +61,7 @@ void Usart::ST_ByteReceived(UsartData* pdata)
 	tmp_head = (rx_head + 1) & UART_BUF_MASK;
 	if(tmp_head == rx_tail)
 	{
-		// nadpisanie bufora
+		// buffer overwrite
 	}
 	else
 	{

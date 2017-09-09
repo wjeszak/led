@@ -14,7 +14,6 @@
 #define ADDRESS_OFFSET 			100
 
 #define COMM_GREEN_RED_OFF 		0x00
-
 #define COMM_GREEN_ON 			0x01
 #define COMM_RED_ON 			0x02
 #define COMM_GREEN_BLINK 		0x03
