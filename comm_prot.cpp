@@ -12,7 +12,7 @@
 
 Comm_prot::Comm_prot()
 {
-	address = 1;
+	address = 6;
 }
 
 void Comm_prot::Parse(uint8_t* frame)
@@ -67,7 +67,6 @@ void Comm_prot::Parse(uint8_t* frame)
 			led.SetParams(LED_RED_PIN, 3);
 		break;
 		default:
-		//	led.SetParams(LED_RED_PIN, 3);
 		break;
 		}
 	}

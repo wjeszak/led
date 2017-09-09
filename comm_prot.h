@@ -24,8 +24,8 @@
 #define COMM_RED_1PULSE 		0x07
 #define COMM_GREEN_2PULSES 		0x08
 #define COMM_RED_2PULSES 		0x09
-#define COMM_GREEN_3PULSES 		0x10
-#define COMM_RED_3PULSES 		0x11
+#define COMM_GREEN_3PULSES 		0x0A
+#define COMM_RED_3PULSES 		0x0B
 
 class Comm_prot
 {
