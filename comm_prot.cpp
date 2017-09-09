@@ -30,6 +30,7 @@ void Comm_prot::Parse(uint8_t* frame)
 		timer.Disable(TIMER_LED_BLINK);
 		timer.Disable(TIMER_LED_PULSE);
 		timer.Disable(TIMER_LED_DELAY);
+		led.pulses_cnt = 0;
 
 		switch(queued_command)
 		{
