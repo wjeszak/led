@@ -7,19 +7,15 @@
 
 #ifndef TIMER_H_
 #define TIMER_H_
+
 #include <avr/io.h>
+#include <stdio.h>
 
-#include "state_machine.h"
-
-#define NUMBER_OF_TIMERS 				8
+#define NUMBER_OF_TIMERS 				3
 
 #define TIMER_LED_BLINK					0
 #define TIMER_LED_PULSE 				1
 #define TIMER_LED_DELAY					2
-
-// PCB door: F_CPU = 73728000 Hz
-// OCR = (F_CPU / 64 / 500) - 1 = 229		~2 ms
-// UART baud = 19200 bps -> tchar = 1 / (192000 / 10 bits frame) = 0.5 ms
 
 enum T0Prescallers
 {

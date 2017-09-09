@@ -8,7 +8,6 @@
 #ifndef USART_H_
 #define USART_H_
 
-#include <inttypes.h>
 #include "state_machine.h"
 
 #define USART_DE_DDR 			DDRD

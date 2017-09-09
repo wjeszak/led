@@ -5,7 +5,6 @@
  *      Author: tomek
  */
 
-#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "state_machine.h"
 #include "usart.h"
