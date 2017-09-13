@@ -26,6 +26,8 @@
 #define COMM_GREEN_3PULSES 		0x0A
 #define COMM_RED_3PULSES 		0x0B
 
+#define COMM_DIAG 				0x0C
+
 class Comm_prot
 {
 public:

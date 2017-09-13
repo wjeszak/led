@@ -12,16 +12,23 @@
 
 Comm_prot::Comm_prot()
 {
-	address = 6;
+	address = 1;
 }
 
 void Comm_prot::Parse(uint8_t* frame)
 {
 	uint8_t crc = Crc8(frame, 2);
+
+	if((frame[0] == address + ADDRESS_OFFSET) && (frame[1] == COMM_DIAG) && (frame[2] == crc))
+	{
+		comm.Prepare(0x80);
+		return;
+	}
+
 	if((frame[0] == address + ADDRESS_OFFSET) && (frame[2] == crc))
 	{
 		queued_command = frame[1];
-		comm.Prepare(0x80);
+		//comm.Prepare(0x80);
 	}
 
 	if((frame[0] == 0xFF) && (frame[2] == crc))
