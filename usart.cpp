@@ -6,7 +6,6 @@
  */
 
 #include <avr/interrupt.h>
-#include "state_machine.h"
 #include "usart.h"
 #include "comm_prot.h"
 
@@ -76,7 +75,7 @@ void Usart::ST_FrameReceived(UsartData* pdata)
 	while(rx_tail != rx_head)
 	{
 		rx_tail = (rx_tail + 1) & UART_BUF_MASK;
-		usart_data.frame[i] = rx_buf[rx_tail];
+		pdata->frame[i] = rx_buf[rx_tail];
 		i++;
 	}
 	pdata->len = 0;

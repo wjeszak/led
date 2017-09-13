@@ -22,8 +22,8 @@
 #define LED_GREEN_SW 			LED_PORT ^=  (1 << LED_GREEN_PIN)
 #define LED_RED_SW 				LED_PORT ^=  (1 << LED_RED_PIN)
 
-#define LED_BLINK_PERIOD 		200 		// [ms]
-#define LED_PULSE_PERIOD		50			// [ms]
+#define LED_BLINK_PERIOD 		100	 		// [ms]
+#define LED_PULSE_PERIOD		100			// [ms]
 #define LED_PULSE_DELAY_PERIOD	1000		// [ms]
 
 class Led

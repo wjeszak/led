@@ -12,7 +12,7 @@
 
 Comm_prot::Comm_prot()
 {
-	address = 1;
+	address = 6;
 }
 
 void Comm_prot::Parse(uint8_t* frame)
