@@ -25,6 +25,7 @@
 #define LED_BLINK_PERIOD 		100	 		// [ms]
 #define LED_PULSE_PERIOD		100			// [ms]
 #define LED_PULSE_DELAY_PERIOD	1000		// [ms]
+#define LED_FOR_TIME 			250			// [ms]
 
 class Led
 {

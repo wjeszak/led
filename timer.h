@@ -11,11 +11,12 @@
 #include <avr/io.h>
 #include <stdio.h>
 
-#define NUMBER_OF_TIMERS 				3
+#define NUMBER_OF_TIMERS 				4
 
 #define TIMER_LED_BLINK					0
 #define TIMER_LED_PULSE 				1
 #define TIMER_LED_DELAY					2
+#define TIMER_LED_FOR_TIME				3
 
 enum T0Prescallers
 {
@@ -53,5 +54,6 @@ extern void RedBlink();
 extern void GreenRedBlink();
 extern void PulseA();
 extern void PulseB();
+extern void GreenForTime();
 
 #endif /* TIMER_H_ */

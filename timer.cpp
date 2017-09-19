@@ -50,6 +50,7 @@ void Timer::Assign(uint8_t handler_id, uint16_t interval, void(*fp)())
 	timer_handlers[handler_id].counter = 0;
 	timer_handlers[handler_id].active = true;
 	timer_handlers[handler_id].fp = fp;
+	TCNT0 = 0;
 }
 
 void Timer::Enable(uint8_t handler_id)
@@ -101,4 +102,10 @@ void PulseB()
 	timer.Disable(TIMER_LED_DELAY);
 	LED_PORT &= ~(1 << led.color);
 	timer.Assign(TIMER_LED_PULSE, LED_PULSE_PERIOD, PulseA);
+}
+
+void GreenForTime()
+{
+	LED_GREEN_OFF;
+	timer.Disable(TIMER_LED_FOR_TIME);
 }

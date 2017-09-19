@@ -25,7 +25,9 @@
 #define COMM_RED_2PULSES 		0x09
 #define COMM_GREEN_3PULSES 		0x0A
 #define COMM_RED_3PULSES 		0x0B
-#define COMM_DIAG 				0x0C
+#define COMM_GREEN_ON_FOR_TIME 	0x0C
+#define COMM_DIAG 				0x0D
+#define COMM_NEED_QUEUE_BIT		7
 
 class Comm_prot
 {
@@ -34,7 +36,9 @@ public:
 	void Parse(uint8_t* frame);
 	void Prepare(uint8_t res);
 private:
+	bool NeedQueue();
 	void EnqueueCommand(uint8_t command);
+	void RunCommand(uint8_t command);
 	uint8_t Crc8(uint8_t* frame, uint8_t len);
 	uint8_t address;
 	uint8_t queued_command;
