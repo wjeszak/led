@@ -85,23 +85,22 @@ void GreenRedBlink()
 	LED_RED_SW;
 }
 
-void PulseA()
+void Pulse()
 {
 	led.pulses_cnt++;
 	if(led.pulses_cnt == led.pulses * 2)
 	{
 		led.pulses_cnt = 0;
 		timer.Disable(TIMER_LED_PULSE);
-		timer.Assign(TIMER_LED_DELAY, LED_PULSE_DELAY_PERIOD, PulseB);
 	}
 	LED_PORT ^= (1 << led.color);
 }
 
-void PulseB()
+void Delay()
 {
-	timer.Disable(TIMER_LED_DELAY);
-	LED_PORT &= ~(1 << led.color);
-	timer.Assign(TIMER_LED_PULSE, LED_PULSE_PERIOD, PulseA);
+	//timer.Disable(TIMER_LED_DELAY);
+	//LED_PORT &= ~(1 << led.color);
+	timer.Assign(TIMER_LED_PULSE, LED_PULSE_PERIOD, Pulse);
 }
 
 void GreenForTime()

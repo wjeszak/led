@@ -52,8 +52,8 @@ extern Timer timer;
 extern void GreenBlink();
 extern void RedBlink();
 extern void GreenRedBlink();
-extern void PulseA();
-extern void PulseB();
+extern void Pulse();
+extern void Delay();
 extern void GreenForTime();
 
 #endif /* TIMER_H_ */
