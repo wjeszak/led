@@ -12,7 +12,7 @@
 
 Comm_prot::Comm_prot()
 {
-	address = 6;
+	address = 7;
 	queued_command = 0;
 }
 
