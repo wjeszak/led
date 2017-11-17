@@ -12,7 +12,7 @@
 
 Comm_prot::Comm_prot()
 {
-	address = 7;
+	address = 1;
 	queued_command = 0;
 }
 
@@ -84,7 +84,9 @@ void Comm_prot::RunCommand(uint8_t command)
 		timer.Assign(TIMER_LED_BLINK, LED_BLINK_PERIOD, RedBlink);
 	break;
 	case COMM_GREEN_RED_BLINK:
-		timer.Assign(TIMER_LED_BLINK, LED_BLINK_PERIOD, GreenRedBlink);
+		LED_GREEN_ON;
+		led.current_led = LED_GREEN_PIN;
+		timer.Assign(TIMER_LED_BLINK, LED_PULSE_DELAY_PERIOD1, GreenRedBlink);
 	break;
 	case COMM_GREEN_1PULSE:
 		led.SetParams(LED_GREEN_PIN, 1);

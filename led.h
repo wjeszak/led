@@ -26,6 +26,7 @@
 #define LED_PULSE_PERIOD		100			// [ms]
 #define LED_PULSE_DELAY_PERIOD	1000		// [ms]
 #define LED_FOR_TIME 			250			// [ms]
+#define LED_PULSE_DELAY_PERIOD1 500			// [ms]
 
 class Led
 {
@@ -33,6 +34,7 @@ public:
 	Led();
 	void SetParams(uint8_t led_color, uint8_t led_pulses);
 	uint8_t color, pulses_cnt, pulses;
+	uint8_t current_led;
 };
 
 extern Led led;

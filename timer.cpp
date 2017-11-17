@@ -79,10 +79,42 @@ void RedBlink()
 	LED_RED_SW;
 }
 
+void GreenRedBlink1()
+{
+	timer.Disable(TIMER_LED_BLINK);
+	if(led.current_led == LED_GREEN_PIN)
+	{
+		LED_GREEN_ON;
+		led.current_led = LED_GREEN_PIN;
+		timer.Assign(TIMER_LED_BLINK, LED_PULSE_DELAY_PERIOD1, GreenRedBlink);
+		return;
+	}
+	if(led.current_led == LED_RED_PIN)
+	{
+		LED_RED_ON;
+		led.current_led = LED_RED_PIN;
+		timer.Assign(TIMER_LED_BLINK, LED_PULSE_DELAY_PERIOD1, GreenRedBlink);
+		return;
+	}
+}
+
 void GreenRedBlink()
 {
-	LED_GREEN_SW;
-	LED_RED_SW;
+	timer.Disable(TIMER_LED_BLINK);
+	if(led.current_led == LED_GREEN_PIN)
+	{
+		LED_GREEN_OFF;
+		led.current_led = LED_RED_PIN;
+		timer.Assign(TIMER_LED_BLINK, LED_PULSE_PERIOD, GreenRedBlink1);
+		return;
+	}
+	if(led.current_led == LED_RED_PIN)
+	{
+		LED_RED_OFF;
+		led.current_led = LED_GREEN_PIN;
+		timer.Assign(TIMER_LED_BLINK, LED_PULSE_PERIOD, GreenRedBlink1);
+		return;
+	}
 }
 
 void Pulse()
